@@ -50,24 +50,31 @@ co: parseFloat(formData.co) || 0,
  
     setLoading(true);
     try {
-const response = await fetch('http://127.0.0.1:5000/predict', {
+      const response = await fetch(`${'https://airqualitypredict.onrender.com/api/predict'}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
+      console.log("Raw response:", response);
+
+      if (!response.ok) { throw new Error(`Server error: ${response.status}`); }
+
  
       const result = await response.json();
+      console.log("Response JSON:", result);
       if (response.ok) {
         setPrediction(result.prediction);
       } else {
         setError(result.error || 'An error occurred while fetching the prediction.');
       }
     } catch (err) {
+      console.error('Error:', err);
       setError('Failed to connect to the server.');
     } finally {
       setLoading(false);
     }
   };
+  
  
   return (
     <div className='container'>
