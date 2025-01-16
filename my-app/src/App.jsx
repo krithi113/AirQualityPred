@@ -50,7 +50,7 @@ co: parseFloat(formData.co) || 0,
  
     setLoading(true);
     try {
-      const response = await fetch(`${'https://airqualitypredict.onrender.com/api/predict'}`, {
+      const response = await fetch(`${'https://airqualitypredict.onrender.com/predict'}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
