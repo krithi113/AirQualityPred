@@ -1,0 +1,213 @@
+
+/* Reset some default margins/padding */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Times New Roman', Times, serif;
+  transition: background-color 0.5s;
+}
+ 
+/*
+  .bg_page is the outer container in SurveyForm.jsx
+  with inline "style={pageStyle}"
+  You can optionally define some default background here
+*/
+.bg_page {
+  /* Stretch this container to the full height of the viewport */
+  min-height: 100vh;
+ 
+  /* Use flexbox to center child elements (like your .container) */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* vertical centering */
+  align-items: center;     /* horizontal centering */
+ 
+  /* Set your background image, size, position */
+  /* background: url('yourBackground.jpg') no-repeat center center; */
+  background-size: cover;
+ 
+  /* If you have a fading or transition effect: */
+  transition: background-image 0.5s;
+}
+/*
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  text-align: center;       
+*/
+ 
+/* The inner container that holds the actual form content */
+.container {
+  max-width: 600px;
+  width: 90%;            /* so it’s responsive on mobile */
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;    /* center text inside, if you like */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* No large top margin needed, because flexbox is doing the vertical centering */
+}
+ 
+/* Headings color */
+h1, h2, h3 {
+  color: #333;
+}
+ 
+/* Force labels to be block-level for stacked layout */
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+ 
+/* Text inputs fill width and have some spacing */
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+ 
+/* Button styling */
+button {
+  padding: 10px 15px;
+  margin-right: 10px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+ 
+button[type="reset"] {
+  background-color: #f44336;
+}
+ 
+button:hover {
+  background-color: #45a049;
+}
+button[type="reset"]:hover {
+  background-color: #e53935;
+}
+ 
+/* Progress bar container */
+/*
+.progress-bar {
+  width: 100%;
+  background-color: #f3f3f3;
+  border-radius: 4px;
+  margin-top: 10px;
+  height: 20px;
+  overflow: hidden;
+}
+  */
+ 
+/* Actual progress fill */
+/*
+.progress {
+  height: 100%;
+  width: 0%; 
+  background-color: #4caf50;
+  transition: width 0.5s;
+}
+  */
+ 
+/* Loader (spinner) for the “loading” state */
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  margin: 20px auto; /* center horizontally */
+}
+ 
+/* Spin keyframe for loader */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+ 
+
+/*
+  "animated" and "fadeIn"/"bounceIn"
+  are used for CSS animations in SurveyForm
+*/
+ 
+/* base class for animations */
+.animated {
+  animation-duration: 1.5s;
+  animation-fill-mode: both;
+}
+ 
+/* fadeIn keyframes and class */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.fadeIn {
+  animation-name: fadeIn;
+}
+ 
+/* bounceIn keyframes and class */
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  20%, 40%, 60%, 80%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+.bounceIn {
+  animation-name: bounceIn;
+}
+
+/* The final results box styling */
+#resultBox {
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin-top: 20px;
+  background-color: #fff;
+}
+
+.goodResult{
+  background-color: #d4edda  !important;/*Light Green*/
+  border-color: #c3e6cb; 
+}
+
+.poorResult{
+  background-color: #f8d7da !important;
+  border-color: #f5c6cb; 
+}
+ 
