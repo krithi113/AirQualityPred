@@ -5,8 +5,7 @@ import './App.css'; // Your CSS with animations, backgrounds, etc.
 function SurveyForm() {
   const [page, setPage] = useState(1);
   //const [progressWidth, setProgressWidth] = useState('0%');
-  const [isLoading, setIsLoading] = useState(false);
- 
+   
   // Final result
   const [resultStatus, setResultStatus] = useState('');
   const [resultDescription, setResultDescription] = useState('');
@@ -59,8 +58,7 @@ function SurveyForm() {
       no2: ''
     });
     setPage(1);
-    //setProgressWidth('0%');
-    setIsLoading(false);
+  
     setResultStatus('');
     setResultDescription('');
     setResultEmoji('');
@@ -70,44 +68,49 @@ function SurveyForm() {
   // **Real API call** to Flask back end
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    //setProgressWidth('100%'); // fill the progress bar
+    setPage(3);
  
     try {
       // Replace with your actual Flask endpoint:
 // e.g. 'http://127.0.0.1:5000/predict' or 'https://myflaskapp.com/predict'
-const response = await axios.post('https://airqualitypredict.onrender.com/predict', formData);
+
+      
+        const response = await axios.post('https://airqualitypredict.onrender.com/predict', formData);
  
-      // Expecting { prediction: "Good" } or { prediction: "Bad" }
-      const { prediction } = response.data;
-      setResultStatus(prediction);
- 
-      if (prediction.toLowerCase() === 'good') {
-        setResultDescription('The air quality is good. Enjoy your day!');
-        setResultEmoji('😃');
-        setBgImage('good.jpg'); // background changes to good
-        //setBgColor
-       
-      } else if (prediction.toLowerCase() === 'poor') {
-        setResultDescription('The air quality is poor. Consider wearing a mask.');
-        setResultEmoji('😷');
-        setBgImage('poor.jpg');
-      } else {
-        // If server returns something else
-        setResultDescription(`Server says: ${prediction}`);
-        setResultEmoji('❓');
-        setBgImage('paraplane.jpg');
-      }
+        // Expecting { prediction: "Good" } or { prediction: "Bad" }
+        const { prediction } = response.data;
+        setResultStatus(prediction);
+
+        setTimeout(()=>{
+   
+        if (prediction.toLowerCase() === 'good') {
+          setResultDescription('The air quality is good. Enjoy your day!');
+          setResultEmoji('😊');
+          setBgImage('good.jpg'); // background changes to good
+          //setBgColor
+         
+        } else if (prediction.toLowerCase() === 'poor') {
+          setResultDescription('The air quality is poor. Consider wearing a mask.');
+          setResultEmoji('😷');
+          setBgImage('poor.jpg');
+        } else {
+          // If server returns something else
+          setResultDescription(`Server says: ${prediction}`);
+          setResultEmoji('❓');
+          setBgImage('paraplane.jpg');
+        }
+        setPage(4);
+      }, 2000);
+
+
     } catch (error) {
       console.error('API call error:', error);
       setResultStatus('Error');
       setResultDescription('Unable to fetch results. Please try again.');
       setResultEmoji('❌');
       setBgImage('paraplane.jpg');
-    } finally {
-      setIsLoading(false);
-      setPage(3); // Move to final "Results" page
-    }
+      setPage(4);
+    } 
   };
  
   // ---- Rendering ----
@@ -123,7 +126,7 @@ const response = await axios.post('https://airqualitypredict.onrender.com/predic
   return (
     <div className="bg_page" id="surveyContainer" style={pageStyle}>
       <div className="container">
-        <h1>Welcome to "Know the Air You Breathe"</h1>
+        <h1>Know the Air You Breathe 😃</h1>
  
         {/* <div className="progress-bar">
           <div className="progress" style={{ width: progressWidth }}></div>
@@ -259,17 +262,18 @@ value={formData.co}
  
         {page === 3 && (
           <div className="section" id="resultsSection">
-            {/* Show loading spinner if isLoading */}
-            {isLoading && (
-              <div>
-                <h3>Let's wait for the results!!!</h3>
-                <div className="loader" id="loader"></div>
-              </div>
-            )}
-            {/* Show final result if not loading */}
-            {!isLoading && (
+            <h2> Thank you so much for filling in the survey!</h2>
+            <p>We will let you know the results shortly...</p>
+
+            <div className='loader'></div>
+            </div>
+
+        )}
+
+        {page === 4 &&(
+
               <div className="animated bounceIn" id="results" style={{ display: 'block' }}>
-                <h3>Here you GO!!!</h3>
+                <h3>Here you GO!</h3>
                 <div id="resultBox" className={resultStatus === 'Good'? 'goodResult':'poorResult'}>
                   <p>
                     <span id="resultStatus">{resultStatus}</span>
@@ -285,8 +289,7 @@ value={formData.co}
                 </button>
               </div>
             )}
-          </div>
-        )}
+          
       </div>
     </div>
   );
